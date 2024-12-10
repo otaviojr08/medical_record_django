@@ -1,3 +1,8 @@
 # venv
 medical_record
 db.sqlite3
+
+# Ignorar arquivos compilados pelo Python
+__pycache__/
+*.pyc
+*.pyo
