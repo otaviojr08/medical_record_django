@@ -1,0 +1,46 @@
+<!-- templates/user_dashboard/prontuario_detalhes.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <!-- Título -->
+    <h1 class="text-center mb-4">Prontuário de {{ prontuario.paciente.nome }} - {{ prontuario.tipo }}</h1>
+    
+    <!-- Informações do Prontuário -->
+    <div class="card mb-4 shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h4 class="card-title mb-0">Detalhes do Prontuário</h4>
+        </div>
+        <div class="card-body">
+            <p><strong>Data:</strong> {{ prontuario.data }}</p>
+            <p><strong>Descrição:</strong> {{ prontuario.descricao }}</p>
+        </div>
+    </div>
+
+    <!-- Exames -->
+    <div class="card mb-4 shadow-sm">
+        <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
+            <h4 class="card-title mb-0">Exames</h4>
+            <a href="{% url 'cadastro_exame' prontuario_id=prontuario.id %}" class="btn btn-sm btn-light">Adicionar Exame</a>
+        </div>
+        <div class="card-body">
+            {% if exames %}
+                <ul class="list-group">
+                    {% for exame in exames %}
+                        <li class="list-group-item">
+                            <strong>{{ exame.nome }}</strong> - {{ exame.resultado }} ({{ exame.data_realizacao }})
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="text-muted">Não há exames registrados para este prontuário.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Botões -->
+    <div class="text-center mt-4">
+        <a href="{% url 'paciente_detalhes' paciente_id=prontuario.paciente.id %}" class="btn btn-outline-secondary">Voltar para os detalhes do paciente</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,42 @@
+<!-- templates/user_dashboard/lista_prontuarios.html -->
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Prontuários</h1>
+
+    <!-- Botão para abrir a página de cadastro de prontuário -->
+    
+
+    <!-- Lista de prontuários -->
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Paciente</th>
+                <th>Médico</th>
+                <th>Tipo</th>
+                <th>Data</th>
+                <th>Descrição</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for prontuario in prontuarios %}
+                <tr>
+                    <td>{{ prontuario.paciente.nome }}</td>
+                    <td>{{ prontuario.medico.nome }}</td>
+                    <td>{{ prontuario.tipo }}</td>
+                    <td>{{ prontuario.data }}</td>
+                    <td>{{ prontuario.descricao|truncatewords:10 }}</td>
+                    <td>
+                        <a href="{% url 'prontuario_detalhes' prontuario.id %}" class="btn btn-info btn-sm">Detalhes</a>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="5" class="text-center">Nenhum prontuário cadastrado.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

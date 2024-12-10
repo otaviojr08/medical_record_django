@@ -1,0 +1,46 @@
+<!-- templates/user_dashboard/lista_medicos.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Médicos</h1>
+
+    <!-- Botão para abrir a página de cadastro -->
+    <a href="{% url 'cadastro_medico' %}" class="btn btn-primary mb-3">
+        Cadastrar Médico
+    </a>
+
+    <!-- Lista de médicos -->
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>CRM</th>
+                <th>Especialidade</th>
+                <th>Email</th>
+                <th>Telefone</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for medico in medicos %}
+                <tr>
+                    <td>{{ medico.nome }}</td>
+                    <td>{{ medico.crm }}</td>
+                    <td>{{ medico.especialidade }}</td>
+                    <td>{{ medico.email }}</td>
+                    <td>{{ medico.telefone }}</td>
+                    <td>
+                        <a href="{% url 'medico_detalhes' medico.id %}" class="btn btn-info btn-sm">Detalhes</a>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center">Nenhum médico cadastrado.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

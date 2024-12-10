@@ -1,0 +1,51 @@
+<!-- templates/home.html -->
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <div class="text-center">
+        <h1 class="display-4">Bem-vindo ao Sistema de Prontuários</h1>
+        {% if user.is_authenticated %}
+            <p class="lead">Olá, {{ user.username }}! Explore as funcionalidades abaixo:</p>
+        {% else %}
+            <p class="lead">Por favor, faça login ou cadastre-se para acessar o sistema.</p>
+            <a href="{% url 'login' %}" class="btn btn-primary btn-lg mt-3">Login</a>
+            <a href="{% url 'cadastro_usuario' %}" class="btn btn-outline-primary btn-lg mt-3">Cadastre-se</a>
+        {% endif %}
+    </div>
+
+    {% if user.is_authenticated %}
+    <div class="row mt-4">
+        <!-- Pacientes Card -->
+        <div class="col-md-4">
+            <div class="card text-center shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Pacientes</h5>
+                    <p class="card-text">Visualize e gerencie os dados dos pacientes.</p>
+                    <a href="{% url 'lista_pacientes' %}" class="btn btn-primary">Visualizar Pacientes</a>
+                </div>
+            </div>
+        </div>
+        <!-- Médicos Card -->
+        <div class="col-md-4">
+            <div class="card text-center shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Médicos</h5>
+                    <p class="card-text">Adicione e organize informações dos médicos.</p>
+                    <a href="{% url 'lista_medicos' %}" class="btn btn-primary">Visualizar Médicos</a>
+                </div>
+            </div>
+        </div>
+        <!-- Prontuários Card -->
+        <div class="col-md-4">
+            <div class="card text-center shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Prontuários</h5>
+                    <p class="card-text">Acesse e registre prontuários médicos.</p>
+                    <a href="{% url 'lista_prontuarios' %}" class="btn btn-primary">Acessar Prontuários</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

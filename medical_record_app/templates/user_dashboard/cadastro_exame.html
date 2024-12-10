@@ -1,0 +1,21 @@
+<!-- templates/user_dashboard/cadastro_exame.html -->
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-6 mx-auto">
+            <h1>Cadastrar Exame</h1>
+            <form method="POST"  class="shadow-lg p-4 rounded border border-light">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Cadastrar</button>
+            </form>
+        </div>
+    </div>
+
+     <!-- Botões -->
+     <div class="text-center mt-4">
+        <a href="{% url 'prontuario_detalhes' prontuario_id=prontuario.id %}" class="btn btn-outline-secondary">Voltar para os detalhes do prontuário</a>
+    </div>
+</div>
+{% endblock %}

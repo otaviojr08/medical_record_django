@@ -1,0 +1,50 @@
+<!-- templates/user_dashboard/paciente_detalhes.html -->
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <!-- Título -->
+    <h1 class="text-center mb-4">{{ paciente.nome }}</h1>
+    
+    <!-- Informações do Paciente -->
+    <div class="card mb-4 shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h4 class="card-title mb-0">Informações do Paciente</h4>
+        </div>
+        <div class="card-body">
+            <p><strong>Data de Nascimento:</strong> {{ paciente.data_nascimento }}</p>
+            <p><strong>Sexo:</strong> {{ paciente.get_sexo_display }}</p>
+            <p><strong>Endereço:</strong> {{ paciente.endereco }}</p>
+            <p><strong>Telefone:</strong> {{ paciente.telefone }}</p>
+            <p><strong>Email:</strong> {{ paciente.email }}</p>
+        </div>
+    </div>
+    
+    <!-- Prontuários -->
+    <div class="card mb-4 shadow-sm">
+        <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
+            <h4 class="card-title mb-0">Prontuários</h4>
+            <a href="{% url 'cadastro_prontuario_paciente' paciente_id=paciente.id %}" class="btn btn-sm btn-light">Adicionar Prontuário</a>
+        </div>
+        <div class="card-body">
+            {% if prontuarios %}
+                <ul class="list-group">
+                    {% for prontuario in prontuarios %}
+                        <li class="list-group-item">
+                            <a href="{% url 'prontuario_detalhes' prontuario_id=prontuario.id %}">
+                                <strong>{{ prontuario.tipo }}</strong> - {{ prontuario.data }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="text-muted">Não há prontuários para este paciente.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Botões -->
+    <div class="text-center mt-4">
+        <a href="{% url 'home' %}" class="btn btn-outline-secondary">Voltar para a página inicial</a>
+    </div>
+</div>
+{% endblock %}
