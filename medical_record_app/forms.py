@@ -16,8 +16,17 @@ class MedicoForm(forms.ModelForm):
 class ProntuarioForm(forms.ModelForm):
     class Meta:
         model = Prontuario
-        fields = ['medico', 'tipo', 'descricao']
+        fields = ['medico', 'paciente', 'tipo', 'descricao']
 
+    def __init__(self, *args, exibir_medico=True, exibir_paciente=True, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        if not exibir_paciente:
+            del self.fields['paciente']  # Remove o campo de paciente se não for necessário
+
+        if not exibir_medico:
+            del self.fields['medico']  # Remove o campo de médico se não for necessário
+        
 
 class ExameForm(forms.ModelForm):
     class Meta:
