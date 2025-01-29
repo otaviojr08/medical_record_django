@@ -100,32 +100,37 @@ def medico_detalhes(request, medico_id):
 
 # Cadastro de prontuário
 @login_required
-def cadastro_prontuario(request, paciente_id):
-    paciente = get_object_or_404(Paciente, id=paciente_id)
+def cadastro_prontuario(request, medico_id):
+    medico = get_object_or_404(Medico, id=medico_id)
+
     if request.method == 'POST':
-        form = ProntuarioForm(request.POST)
+        form = ProntuarioForm(request.POST, exibir_medico=False)  # Esconde o campo "medico"
+
         if form.is_valid():
             prontuario = form.save(commit=False)
-            prontuario.paciente = paciente
+            prontuario.medico = medico  # Define o médico automaticamente
             prontuario.save()
-            return redirect('paciente_detalhes', paciente_id=paciente.id)
+            return redirect('medico_detalhes', medico_id=medico.id)
     else:
-        form = ProntuarioForm()
-    return render(request, 'user_dashboard/cadastro_prontuario.html', {'form': form, 'paciente': paciente})
+        form = ProntuarioForm(exibir_medico=False)  # Remove o campo "medico" do formulário
+
+    return render(request, 'user_dashboard/cadastro_prontuario.html', {'form': form, 'paciente': medico})
 
 
 @login_required
 def cadastro_prontuario_paciente(request, paciente_id):
     paciente = get_object_or_404(Paciente, id=paciente_id)
+
     if request.method == 'POST':
-        form = ProntuarioForm(request.POST)
+        form = ProntuarioForm(request.POST, exibir_paciente=False)  # Esconde o campo "paciente"
         if form.is_valid():
             prontuario = form.save(commit=False)
-            prontuario.paciente = paciente
+            prontuario.paciente = paciente  # Define o paciente automaticamente
             prontuario.save()
             return redirect('paciente_detalhes', paciente_id=paciente.id)
     else:
-        form = ProntuarioForm()
+        form = ProntuarioForm(exibir_paciente=False)  # Remove o campo "paciente" do formulário
+
     return render(request, 'user_dashboard/cadastro_prontuario.html', {'form': form, 'paciente': paciente})
 
 
